@@ -104,8 +104,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		400,
-		400,
+		WINDOWSIZE_X,
+		WINDOWSIZE_Y,
 		nullptr,
 		nullptr,
 		hInstance,
@@ -137,6 +137,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
+	case WM_GETMINMAXINFO:
+	{
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.x = WINDOWSIZE_X;
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.y = WINDOWSIZE_Y;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_X;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_Y;
+	}
 	case WM_COMMAND:
 	{
 		int wmId = LOWORD(wParam);
@@ -165,7 +172,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
-	case WM_KEYDOWN: {
+	case WM_KEYDOWN: 
+	{
 		// 숫자 키 및 사칙연산 키들의 눌림에 대한 이벤트 처리
 		HDC hdc = GetDC(hWnd);
 		TCHAR str = wParam;
