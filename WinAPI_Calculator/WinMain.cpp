@@ -1,9 +1,9 @@
 ﻿// WinAPI_Calculator.cpp : 애플리케이션에 대한 진입점을 정의합니다.
-//
 
 #include "framework.h"
 #include "resource.h"
 #include "KeyMapper.h"
+#include "Button.h"
 
 #define MAX_LOADSTRING 100
 
@@ -135,8 +135,22 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+
 	switch (message)
 	{
+		case WM_CREATE: {
+			Button::generate(hWnd, hInst, 25, 55, "7");
+			Button::generate(hWnd, hInst, 80, 55, "8");
+			Button::generate(hWnd, hInst, 135, 55, "9");
+			Button::generate(hWnd, hInst, 25, 110, "4");
+			Button::generate(hWnd, hInst, 80, 110, "5");
+			Button::generate(hWnd, hInst, 135, 110, "6");
+			Button::generate(hWnd, hInst, 25, 165, "1");
+			Button::generate(hWnd, hInst, 80, 165, "2");
+			Button::generate(hWnd, hInst, 135, 165, "3");
+		}
+		break;
+
 		case WM_GETMINMAXINFO:
 		{
 			((MINMAXINFO*)lParam)->ptMaxTrackSize.x = WINDOWSIZE_X;
@@ -178,7 +192,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = GetDC(hWnd);
 			TCHAR str = wParam;
 		
-			if (str == KeyMapper::getInstance()->value('+')) {
+			if (str == KeyMapper::getInstance()->value('1')) {
 				TextOut(hdc, 0, 0, &str, 1);
 			}
 			ReleaseDC(hWnd, hdc);
