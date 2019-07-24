@@ -4,6 +4,8 @@
 #include "resource.h"
 #include "KeyMapper.h"
 #include "Button.h"
+#include "TextIndicator.h"
+#include <queue>
 
 #define MAX_LOADSTRING 100
 
@@ -76,7 +78,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hInstance = hInstance;
 	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINAPICALCULATOR));
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(GRAY_BRUSH);
 	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_WINAPICALCULATOR);
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -135,28 +137,50 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static queue<char> inputQue;
 
 	switch (message)
 	{
 		case WM_CREATE: {
-			Button::generate(hWnd, hInst, 25, 55, "7");
-			Button::generate(hWnd, hInst, 80, 55, "8");
-			Button::generate(hWnd, hInst, 135, 55, "9");
-			Button::generate(hWnd, hInst, 25, 110, "4");
-			Button::generate(hWnd, hInst, 80, 110, "5");
-			Button::generate(hWnd, hInst, 135, 110, "6");
-			Button::generate(hWnd, hInst, 25, 165, "1");
-			Button::generate(hWnd, hInst, 80, 165, "2");
-			Button::generate(hWnd, hInst, 135, 165, "3");
+		
+			// Row 1
+			Button::generate(hWnd, hInst, 100, 110, 70, 50, "C");
+			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<");
+			Button::generate(hWnd, hInst, 250, 110, 70, 50, "/");
+
+			// Row 2
+			Button::generate(hWnd, hInst, 25, 165, 70, 50, "7");
+			Button::generate(hWnd, hInst, 100, 165, 70, 50, "8");
+			Button::generate(hWnd, hInst, 175, 165, 70, 50, "9");
+			Button::generate(hWnd, hInst, 250, 165, 70, 50, "*");
+
+			// Row 3
+			Button::generate(hWnd, hInst, 25, 220, 70, 50, "4");
+			Button::generate(hWnd, hInst, 100, 220, 70, 50, "5");
+			Button::generate(hWnd, hInst, 175, 220, 70, 50, "6");
+			Button::generate(hWnd, hInst, 250, 220, 70, 50, "-");
+
+			// Row 4
+			Button::generate(hWnd, hInst, 25, 275, 70, 50, "1");
+			Button::generate(hWnd, hInst, 100, 275, 70, 50, "2");
+			Button::generate(hWnd, hInst, 175, 275, 70, 50, "3");
+			Button::generate(hWnd, hInst, 250, 275, 70, 50, "+");
+
+			// Row 5
+			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0");
+			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".");
+			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=");
+
 		}
 		break;
 
 		case WM_GETMINMAXINFO:
 		{
+			// 창의 크기를 변경하지 못하도록 강제한다
 			((MINMAXINFO*)lParam)->ptMaxTrackSize.x = WINDOWSIZE_X;
 			((MINMAXINFO*)lParam)->ptMaxTrackSize.y = WINDOWSIZE_Y;
 			((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_X;
-			((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_Y;
+			((MINMAXINFO*)lParam)->ptMinTrackSize.y = WINDOWSIZE_Y;
 		}
 		case WM_COMMAND:
 		{
@@ -179,7 +203,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
-			// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+			TextIndicator::drawOutline(hdc);
+
+			if (inputQue.empty()) {
+				TextIndicator::getInstance()->drawText(hdc);
+			}
+			while (!inputQue.empty()) {
+				TextIndicator::getInstance()->append(hdc, inputQue.back());
+				inputQue.pop();
+			}
+
 			EndPaint(hWnd, &ps);
 		}
 		break;
@@ -189,13 +222,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_KEYDOWN: 
 		{
 			// 숫자 키 및 사칙연산 키들의 눌림에 대한 이벤트 처리
-			HDC hdc = GetDC(hWnd);
+			// 들어온 키 입력들을 큐에 넣어놓고 Invalidate로 화면을 무효화해 WM_PAINT를 호출,
+			// WM_PAINT에선 큐가 비어 있지 않은 경우 원소들을 꺼내 TextIndicator로 보냄
+
 			TCHAR str = wParam;
 		
 			if (str == KeyMapper::getInstance()->value('1')) {
-				TextOut(hdc, 0, 0, &str, 1);
+				inputQue.push('1');
 			}
-			ReleaseDC(hWnd, hdc);
+			InvalidateRect(hWnd, NULL, FALSE);
+
 			break;
 		}
 		default:

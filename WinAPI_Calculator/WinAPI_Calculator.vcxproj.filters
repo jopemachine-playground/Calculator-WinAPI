@@ -33,6 +33,9 @@
     <ClInclude Include="Button.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="TextIndicator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculator.cpp">
