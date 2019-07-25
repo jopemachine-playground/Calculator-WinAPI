@@ -62,13 +62,14 @@ private:
 
 	TextIndicator() {
 		inputStr = "";
+
 		inputTextRange.left = left;
-		inputTextRange.right = right;
-		inputTextRange.top = top;
+		inputTextRange.right = right - 20;
+		inputTextRange.top = top - 10;
 		inputTextRange.bottom = bottom;
 
-		outputTextRange.left = left;
-		outputTextRange.right = right;
+		outputTextRange.left = inputTextRange.left;
+		outputTextRange.right = inputTextRange.right;
 		outputTextRange.top = inputTextRange.top + 10;
 		outputTextRange.bottom = inputTextRange.bottom + 30;
 	}

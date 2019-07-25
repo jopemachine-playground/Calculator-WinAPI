@@ -4,8 +4,8 @@
 #include "resource.h"
 
 #include "Calculator.h"
-#include "KeyMapper.h"
 #include "Button.h"
+#include "KeyMapper.h"
 #include "TextIndicator.h"
 
 #include <queue>
@@ -141,6 +141,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static queue<string> inputQue;
+	static TextIndicator* textIndicator = TextIndicator::getInstance();
+	static Calculator* calculator = Calculator::getInstance();
+	static KeyMapper* keyMapper = KeyMapper::getInstance();
 
 	switch (message)
 	{
@@ -213,15 +216,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			TextIndicator::drawOutline(hdc);
 
 			if (TextIndicator::outputFlag) {
-				TextIndicator::getInstance()->showResult(hdc);
+				textIndicator->showResult(hdc);
 			}
 
 			while (!inputQue.empty()) {
-				TextIndicator::getInstance()->append(hdc, inputQue.front());
+				textIndicator->append(hdc, inputQue.front());
 				inputQue.pop();
 			}
 
-			TextIndicator::getInstance()->drawText(hdc);
+			textIndicator->drawText(hdc);
 			EndPaint(hWnd, &ps);
 		}
 		break;
@@ -238,14 +241,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			TCHAR input = wParam;
 
-			if (input == VK_BACK) TextIndicator::getInstance()->back();
+			if (input == VK_BACK) textIndicator->back();
 
 			if (input == VK_RETURN) {
-				string input = TextIndicator::getInstance()->inputExpression();
-				TextIndicator::getInstance()->setOutput(to_string(Calculator::getInstance()->calculate(input)));
+				string input = textIndicator->inputExpression();
+				textIndicator->setOutput(to_string(calculator->calculate(input)));
 			}
 			
-			string mappingValue = KeyMapper::getInstance()->mappingInputToValue(input);
+			string mappingValue = keyMapper->mappingInputToValue(input);
 			if (mappingValue != "") inputQue.push(mappingValue);
 
 			InvalidateRect(hWnd, NULL, FALSE);
