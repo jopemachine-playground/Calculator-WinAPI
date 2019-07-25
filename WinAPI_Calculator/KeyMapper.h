@@ -1,5 +1,6 @@
 #pragma once
 #include <unordered_map>
+
 using namespace std;
 
 class KeyMapper {
@@ -11,8 +12,34 @@ public:
 	}
 
 	int value(char key) {
+
 		// 해당 map의 원하는 value 값 반환
 		return m_Map.find(key)->second;
+	}
+
+	bool isProperInput(char key) {
+		auto it = m_Map.find(key);
+
+		if (it != m_Map.end()) {
+			return true;
+		}
+		return false;
+	}
+
+	string isOperator(char key) {
+		switch (key) {
+			case VK_OEM_PLUS:
+			case VK_ADD:
+				return " + ";
+			case VK_SUBTRACT:
+			case VK_OEM_MINUS:
+				return " - ";
+			case VK_MULTIPLY:
+				return " * ";
+			case VK_DIVIDE:
+				return " / ";
+		}
+		return "";
 	}
 
 private:
@@ -24,6 +51,7 @@ private:
 	unordered_map<char, int> m_Map;
 
 	KeyMapper() {
+		m_Map.insert({ '0', 0x30 });
 		m_Map.insert({ '1', 0x31 });
 		m_Map.insert({ '2', 0x32 });
 		m_Map.insert({ '3', 0x33 });

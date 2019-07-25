@@ -1,5 +1,6 @@
 #pragma once
 #include <stack>
+#include <queue>
 #include <iostream>
 #include <string>
 
@@ -8,7 +9,7 @@ using namespace std;
 class Calculator {
 public:
 
-	static int calculate(string infixStr);
+	int calculate(string infixStr);
 
 	static Calculator* getInstance() {
 		if (Instance == nullptr) Instance = new Calculator();
@@ -21,11 +22,12 @@ private:
 
 	static Calculator* Instance;
 
-	static string InfToPost(string infixStr);
+	// 중위표기식을 후위표기식으로 변환
+	// 변환할 때 각 토큰들을 분리해, 큐를 만들어 넣는다.
+	queue<string> InfToPost(string infixStr);
 
-	static int parsingPost(string postfixStr);
+	int parsingPost(queue<string> postfixStr);
 
-	static int binaryOpEval(char op, pair<int, int> operand);
+	int binaryOpEval(char op, pair<int, int> operand);
+	
 };
-
-Calculator* Calculator::Instance = nullptr;

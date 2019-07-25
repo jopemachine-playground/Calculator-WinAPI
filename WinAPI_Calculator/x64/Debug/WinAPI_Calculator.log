@@ -1,5 +1,11 @@
-﻿  WinMain.cpp
-D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\TextIndicator.h(20,1): warning C4267:  '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\TextIndicator.h(25,1): warning C4267:  '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(228,14): warning C4244:  '초기화 중': 'WPARAM'에서 'TCHAR'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  Calculator.cpp
+  WinMain.cpp
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\TextIndicator.h(27,1): warning C4267:  '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\TextIndicator.h(45,1): warning C4267:  '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(237,14): warning C4244:  '초기화 중': 'WPARAM'에서 'TCHAR'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(246,53): warning C4244:  '인수': 'TCHAR'에서 'char'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(252,48): warning C4244:  '인수': 'TCHAR'에서 'char'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(252,68): warning C4244:  '인수': 'TCHAR'에서 'const char'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\WinMain.cpp(252,68): warning C4244: D:\바탕화면\WinAPI-Calculator\WinAPI_Calculator\Calculator.cpp(137) : warning C4715: 'Calculator::binaryOpEval': 모든 제어 경로에서 값을 반환하지는 않습니다.
   WinAPI_Calculator.vcxproj -> D:\바탕화면\WinAPI-Calculator\x64\Debug\WinAPI_Calculator.exe

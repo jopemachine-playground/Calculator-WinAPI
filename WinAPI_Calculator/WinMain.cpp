@@ -2,9 +2,12 @@
 
 #include "framework.h"
 #include "resource.h"
+
+#include "Calculator.h"
 #include "KeyMapper.h"
 #include "Button.h"
 #include "TextIndicator.h"
+
 #include <queue>
 
 #define MAX_LOADSTRING 100
@@ -182,6 +185,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_X;
 			((MINMAXINFO*)lParam)->ptMinTrackSize.y = WINDOWSIZE_Y;
 		}
+
 		case WM_COMMAND:
 		{
 			int wmId = LOWORD(wParam);
@@ -199,26 +203,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
+		
 		case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
 			TextIndicator::drawOutline(hdc);
 
-			if (inputQue.empty()) {
-				TextIndicator::getInstance()->drawText(hdc);
+			if (TextIndicator::outputFlag) {
+				TextIndicator::getInstance()->showResult(hdc);
 			}
+
 			while (!inputQue.empty()) {
-				TextIndicator::getInstance()->append(hdc, inputQue.back());
+				TextIndicator::getInstance()->append(hdc, inputQue.front());
 				inputQue.pop();
 			}
 
+			TextIndicator::getInstance()->drawText(hdc);
 			EndPaint(hWnd, &ps);
 		}
 		break;
+
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
+		
 		case WM_KEYDOWN: 
 		{
 			// 숫자 키 및 사칙연산 키들의 눌림에 대한 이벤트 처리
@@ -226,10 +235,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// WM_PAINT에선 큐가 비어 있지 않은 경우 원소들을 꺼내 TextIndicator로 보냄
 
 			TCHAR str = wParam;
-		
-			if (str == KeyMapper::getInstance()->value('1')) {
-				inputQue.push('1');
+
+			if (str == VK_BACK) TextIndicator::getInstance()->back();
+
+			if (str == VK_RETURN) {
+				string input = TextIndicator::getInstance()->inputExpression();
+				TextIndicator::getInstance()->setOutput(to_string(Calculator::getInstance()->calculate(input)));
 			}
+			
+			string op = KeyMapper::getInstance()->isOperator(str);
+			
+			if (op != "") {
+				for (int i = 0; i < op.size(); i++) inputQue.push(op.at(i));
+			}
+
+			if (KeyMapper::getInstance()->isProperInput(str)) inputQue.push(str);
+
 			InvalidateRect(hWnd, NULL, FALSE);
 
 			break;
