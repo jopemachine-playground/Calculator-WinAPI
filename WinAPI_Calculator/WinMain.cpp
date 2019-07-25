@@ -147,7 +147,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_CREATE: {
 		
 			// Row 1
-			Button::generate(hWnd, hInst, 100, 110, 70, 50, "C");
+			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(");
+			Button::generate(hWnd, hInst, 100, 110, 70, 50, ")");
 			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<");
 			Button::generate(hWnd, hInst, 250, 110, 70, 50, "/");
 
@@ -170,6 +171,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			Button::generate(hWnd, hInst, 250, 275, 70, 50, "+");
 
 			// Row 5
+			Button::generate(hWnd, hInst, 25, 330, 70, 50, "C");
 			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0");
 			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".");
 			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=");
