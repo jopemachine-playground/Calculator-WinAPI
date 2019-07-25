@@ -140,7 +140,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static queue<char> inputQue;
+	static queue<string> inputQue;
 
 	switch (message)
 	{
@@ -245,14 +245,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				TextIndicator::getInstance()->setOutput(to_string(Calculator::getInstance()->calculate(input)));
 			}
 			
-			string op = KeyMapper::getInstance()->isOperator(input);
-			
-			if (op != "") {
-				for (int i = 0; i < op.size(); i++) inputQue.push(op.at(i));
-			}
-
-			char number = KeyMapper::getInstance()->isProperInput(input);
-			if (number != NULL) inputQue.push(number);
+			string mappingValue = KeyMapper::getInstance()->mappingInputToValue(input);
+			if (mappingValue != "") inputQue.push(mappingValue);
 
 			InvalidateRect(hWnd, NULL, FALSE);
 

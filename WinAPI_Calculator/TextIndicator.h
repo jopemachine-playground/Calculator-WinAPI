@@ -15,10 +15,10 @@ public:
 	}
 
 	static void drawOutline(HDC hdc) {
-		Rectangle(hdc, left + 5, top + 5, right + 5, bottom + 5);
+		Rectangle(hdc, left + 5, top + 5, right - 7, bottom + 5);
 	}
 
-	void append(HDC hdc, char ch) {
+	void append(HDC hdc, string ch) {
 		inputStr += ch;
 	}
 

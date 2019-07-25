@@ -14,5 +14,5 @@
 #include <memory.h>
 #include <tchar.h>
 
-#define WINDOWSIZE_X 360
+#define WINDOWSIZE_X 355
 #define WINDOWSIZE_Y 460
