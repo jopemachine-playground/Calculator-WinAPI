@@ -140,6 +140,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	static bool shiftKeyFlag = false;
 	static queue<string> inputQue;
 	static TextIndicator* textIndicator = TextIndicator::getInstance();
 	static Calculator* calculator = Calculator::getInstance();
@@ -147,8 +148,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
-		case WM_CREATE: {
-		
+		case WM_CREATE: 
+		{
 			// Row 1
 			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(");
 			Button::generate(hWnd, hInst, 100, 110, 70, 50, ")");
@@ -190,6 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			((MINMAXINFO*)lParam)->ptMinTrackSize.x = WINDOWSIZE_X;
 			((MINMAXINFO*)lParam)->ptMinTrackSize.y = WINDOWSIZE_Y;
 		}
+		break;
 
 		case WM_COMMAND:
 		{
@@ -229,10 +231,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
-		case WM_DESTROY:
+		case WM_DESTROY: 
+		{
 			PostQuitMessage(0);
 			break;
-		
+		}
+
+		// 눌린 키에서 손을 땔 때 shiftFlag를 취소한다 
+		case WM_KEYUP: {
+			shiftKeyFlag = false;
+			break;
+		}
+
 		case WM_KEYDOWN: 
 		{
 			// 숫자 키 및 사칙연산 키들의 눌림에 대한 이벤트 처리
@@ -241,6 +251,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			TCHAR input = wParam;
 
+			if (input == VK_SHIFT) shiftKeyFlag = true;
+
 			if (input == VK_BACK) textIndicator->back();
 
 			if (input == VK_RETURN) {
@@ -248,13 +260,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				textIndicator->setOutput(to_string(calculator->calculate(input)));
 			}
 			
-			string mappingValue = keyMapper->mappingInputToValue(input);
+			string mappingValue = keyMapper->mappingInputToValue(input, shiftKeyFlag);
 			if (mappingValue != "") inputQue.push(mappingValue);
 
 			InvalidateRect(hWnd, NULL, FALSE);
 
 			break;
 		}
+
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 	}
