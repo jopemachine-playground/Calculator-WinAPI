@@ -65,6 +65,7 @@ private:
 
 		m_ShiftMap.insert({ VK_OEM_PLUS, " + " });
 		m_ShiftMap.insert({ VK_OEM_MINUS, " - " });
+		m_ShiftMap.insert({ 0x38, " * " });
 		m_ShiftMap.insert({ 0x39 , " ( " });
 		m_ShiftMap.insert({ 0x30 , " ) " });
 	}

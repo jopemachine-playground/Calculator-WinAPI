@@ -61,8 +61,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	return (int)msg.wParam;
 }
 
-
-
 //
 //  함수: MyRegisterClass()
 //
@@ -151,34 +149,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_CREATE: 
 		{
 			// Row 1
-			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(");
-			Button::generate(hWnd, hInst, 100, 110, 70, 50, ")");
-			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<");
-			Button::generate(hWnd, hInst, 250, 110, 70, 50, "/");
+			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(", Button::IDC_BUTTON_LP);
+			Button::generate(hWnd, hInst, 100, 110, 70, 50, ")", Button::IDC_BUTTON_RP);
+			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<", Button::IDC_BUTTON_CLEAR);
+			Button::generate(hWnd, hInst, 250, 110, 70, 50, "/", Button::IDC_BUTTON_DIVIDE);
 
 			// Row 2
-			Button::generate(hWnd, hInst, 25, 165, 70, 50, "7");
-			Button::generate(hWnd, hInst, 100, 165, 70, 50, "8");
-			Button::generate(hWnd, hInst, 175, 165, 70, 50, "9");
-			Button::generate(hWnd, hInst, 250, 165, 70, 50, "*");
+			Button::generate(hWnd, hInst, 25, 165, 70, 50, "7", Button::IDC_BUTTON_7);
+			Button::generate(hWnd, hInst, 100, 165, 70, 50, "8", Button::IDC_BUTTON_8);
+			Button::generate(hWnd, hInst, 175, 165, 70, 50, "9", Button::IDC_BUTTON_9);
+			Button::generate(hWnd, hInst, 250, 165, 70, 50, "*", Button::IDC_BUTTON_MULTIPLY);
 
 			// Row 3
-			Button::generate(hWnd, hInst, 25, 220, 70, 50, "4");
-			Button::generate(hWnd, hInst, 100, 220, 70, 50, "5");
-			Button::generate(hWnd, hInst, 175, 220, 70, 50, "6");
-			Button::generate(hWnd, hInst, 250, 220, 70, 50, "-");
+			Button::generate(hWnd, hInst, 25, 220, 70, 50, "4", Button::IDC_BUTTON_4);
+			Button::generate(hWnd, hInst, 100, 220, 70, 50, "5", Button::IDC_BUTTON_5);
+			Button::generate(hWnd, hInst, 175, 220, 70, 50, "6", Button::IDC_BUTTON_6);
+			Button::generate(hWnd, hInst, 250, 220, 70, 50, "-", Button::IDC_BUTTON_MINUS);
 
 			// Row 4
-			Button::generate(hWnd, hInst, 25, 275, 70, 50, "1");
-			Button::generate(hWnd, hInst, 100, 275, 70, 50, "2");
-			Button::generate(hWnd, hInst, 175, 275, 70, 50, "3");
-			Button::generate(hWnd, hInst, 250, 275, 70, 50, "+");
+			Button::generate(hWnd, hInst, 25, 275, 70, 50, "1", Button::IDC_BUTTON_1);
+			Button::generate(hWnd, hInst, 100, 275, 70, 50, "2", Button::IDC_BUTTON_2);
+			Button::generate(hWnd, hInst, 175, 275, 70, 50, "3", Button::IDC_BUTTON_3);
+			Button::generate(hWnd, hInst, 250, 275, 70, 50, "+", Button::IDC_BUTTON_PLUS);
 
 			// Row 5
-			Button::generate(hWnd, hInst, 25, 330, 70, 50, "C");
-			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0");
-			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".");
-			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=");
+			Button::generate(hWnd, hInst, 25, 330, 70, 50, "C", Button::IDC_BUTTON_CLEAR);
+			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0", Button::IDC_BUTTON_0);
+			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".", Button::IDC_BUTTON_CLEAR);
+			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=", Button::IDC_BUTTON_EQU);
 
 		}
 		break;
@@ -238,7 +236,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		// 눌린 키에서 손을 땔 때 shiftFlag를 취소한다 
-		case WM_KEYUP: {
+		case WM_KEYUP: 
+		{
 			shiftKeyFlag = false;
 			break;
 		}
