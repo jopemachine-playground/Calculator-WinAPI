@@ -236,22 +236,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// 들어온 키 입력들을 큐에 넣어놓고 Invalidate로 화면을 무효화해 WM_PAINT를 호출,
 			// WM_PAINT에선 큐가 비어 있지 않은 경우 원소들을 꺼내 TextIndicator로 보냄
 
-			TCHAR str = wParam;
+			TCHAR input = wParam;
 
-			if (str == VK_BACK) TextIndicator::getInstance()->back();
+			if (input == VK_BACK) TextIndicator::getInstance()->back();
 
-			if (str == VK_RETURN) {
+			if (input == VK_RETURN) {
 				string input = TextIndicator::getInstance()->inputExpression();
 				TextIndicator::getInstance()->setOutput(to_string(Calculator::getInstance()->calculate(input)));
 			}
 			
-			string op = KeyMapper::getInstance()->isOperator(str);
+			string op = KeyMapper::getInstance()->isOperator(input);
 			
 			if (op != "") {
 				for (int i = 0; i < op.size(); i++) inputQue.push(op.at(i));
 			}
 
-			if (KeyMapper::getInstance()->isProperInput(str)) inputQue.push(str);
+			char number = KeyMapper::getInstance()->isProperInput(input);
+			if (number != NULL) inputQue.push(number);
 
 			InvalidateRect(hWnd, NULL, FALSE);
 
