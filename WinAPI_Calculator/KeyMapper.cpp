@@ -33,6 +33,7 @@ std::unordered_map<int, string> KeyMapper::m_Map = {
 		{ 0x69, "9" },
 };
 
+// Shift 버튼을 누른 채 입력했을 때 입력되는 키 모음
 std::unordered_map<int, string> KeyMapper::m_ShiftMap = {
 	{ VK_OEM_PLUS, " + " },
 	{ VK_OEM_MINUS, " - " },
@@ -45,16 +46,15 @@ void KeyMapper::KeyPressed(HWND hWnd, TCHAR input, bool& shiftKeyFlag, queue<str
 
 	SetFocus(hWnd);
 
-	static TextIndicator* textIndicator = TextIndicator::getInstance();
 	static Calculator* calculator = Calculator::getInstance();
 
 	if (input == VK_SHIFT) shiftKeyFlag = true;
 
-	if (input == VK_BACK) textIndicator->back();
+	if (input == VK_BACK) TextIndicator::back();
 
 	if (input == VK_RETURN) {
-		string input = textIndicator->inputExpression();
-		textIndicator->setOutput(to_string(calculator->calculate(input)));
+		string input = TextIndicator::inputExpression();
+		TextIndicator::setOutput(to_string(calculator->calculate(input)));
 	}
 
 	string mappingValue = mappingInputToValue(input, shiftKeyFlag);

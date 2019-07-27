@@ -3,10 +3,10 @@
 #include "framework.h"
 #include "resource.h"
 
+#include "TextIndicator.h"
 #include "Calculator.h"
 #include "Button.h"
 #include "KeyMapper.h"
-#include "TextIndicator.h"
 
 #include <queue>
 
@@ -140,7 +140,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static bool shiftKeyFlag = false;
 	static queue<string> inputQue;
-	static TextIndicator* textIndicator = TextIndicator::getInstance();
 	static Calculator* calculator = Calculator::getInstance();
 
 	switch (message)
@@ -233,15 +232,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			TextIndicator::drawOutline(hdc);
 
 			if (TextIndicator::outputFlag) {
-				textIndicator->showResult(hdc);
+				TextIndicator::showResult(hdc);
 			}
 
 			while (!inputQue.empty()) {
-				textIndicator->append(hdc, inputQue.front());
+				TextIndicator::append(inputQue.front());
 				inputQue.pop();
 			}
 
-			textIndicator->drawText(hdc);
+			TextIndicator::drawText(hdc);
 			EndPaint(hWnd, &ps);
 		}
 		break;
