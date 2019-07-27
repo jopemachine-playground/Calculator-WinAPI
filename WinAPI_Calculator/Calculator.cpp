@@ -1,3 +1,4 @@
+#pragma once
 #include <regex>
 #include "Utility.h"
 #include "Calculator.h"

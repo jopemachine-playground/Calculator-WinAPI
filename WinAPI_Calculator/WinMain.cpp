@@ -142,10 +142,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static queue<string> inputQue;
 	static TextIndicator* textIndicator = TextIndicator::getInstance();
 	static Calculator* calculator = Calculator::getInstance();
-	static KeyMapper* keyMapper = KeyMapper::getInstance();
 
 	switch (message)
 	{
+		case WM_MOUSEMOVE:
+			ShowWindow(hWnd, SW_SHOW);
+		break;
 		case WM_CREATE: 
 		{
 			// Row 1
@@ -197,6 +199,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// 메뉴 선택을 구문 분석합니다:
 			switch (wmId)
 			{
+			case Button::IDC_BUTTON_1:
+			case Button::IDC_BUTTON_2:
+			case Button::IDC_BUTTON_3:
+			case Button::IDC_BUTTON_4:
+			case Button::IDC_BUTTON_5:
+			case Button::IDC_BUTTON_6:
+			case Button::IDC_BUTTON_7:
+			case Button::IDC_BUTTON_8:
+			case Button::IDC_BUTTON_9:
+			case Button::IDC_BUTTON_PLUS:
+			case Button::IDC_BUTTON_MINUS:
+			case Button::IDC_BUTTON_MULTIPLY:
+			case Button::IDC_BUTTON_DIVIDE:
+				KeyMapper::KeyPressed(hWnd, Button::VkKeyValue((Button::IDC_BUTTON_ID) wmId), shiftKeyFlag, inputQue);
+				break;
 			case IDM_ABOUT:
 				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 				break;
@@ -247,23 +264,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// 숫자 키 및 사칙연산 키들의 눌림에 대한 이벤트 처리
 			// 들어온 키 입력들을 큐에 넣어놓고 Invalidate로 화면을 무효화해 WM_PAINT를 호출,
 			// WM_PAINT에선 큐가 비어 있지 않은 경우 원소들을 꺼내 TextIndicator로 보냄
-
-			TCHAR input = wParam;
-
-			if (input == VK_SHIFT) shiftKeyFlag = true;
-
-			if (input == VK_BACK) textIndicator->back();
-
-			if (input == VK_RETURN) {
-				string input = textIndicator->inputExpression();
-				textIndicator->setOutput(to_string(calculator->calculate(input)));
-			}
-			
-			string mappingValue = keyMapper->mappingInputToValue(input, shiftKeyFlag);
-			if (mappingValue != "") inputQue.push(mappingValue);
-
-			InvalidateRect(hWnd, NULL, FALSE);
-
+			KeyMapper::KeyPressed(hWnd, wParam, shiftKeyFlag, inputQue);
 			break;
 		}
 

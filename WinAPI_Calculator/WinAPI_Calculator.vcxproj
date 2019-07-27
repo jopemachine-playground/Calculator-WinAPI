@@ -161,7 +161,10 @@
     <ClInclude Include="Utility.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="KeyMapper.cpp" />
+    <ClCompile Include="TextIndicator.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>

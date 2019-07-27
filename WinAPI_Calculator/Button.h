@@ -1,12 +1,15 @@
 #pragma once
+#include <unordered_map>
 #include <atlbase.h>
 #include <windows.h>
+
+using namespace std;
 
 class Button {
 public:
 
 	enum IDC_BUTTON_ID{
-		IDC_BUTTON_0 = 100,
+		IDC_BUTTON_0 = 200,
 		IDC_BUTTON_1,
 		IDC_BUTTON_2,
 		IDC_BUTTON_3,
@@ -27,27 +30,13 @@ public:
 		IDC_BUTTON_DIVIDE,
 		IDC_BUTTON_EQU,
 	};
-
-	static HWND generate(HWND hWnd, HINSTANCE hInst, int position_x, int position_y, int size_x, int size_y, string text, IDC_BUTTON_ID id) {
-		
-		USES_CONVERSION;
-
-		// CA2T : https://www.codeproject.com/Questions/396705/How-to-convert-string-to-LPCTSTR Âü°í
-		// string to LPCTSTR
-		return CreateWindow(
-			TEXT("button"),
-			CA2T(text.c_str()),
-			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-			position_x, // position of x
-			position_y, // position of y
-			size_x, // x
-			size_y, // y
-			hWnd,
-			(HMENU) id,
-			hInst,
-			NULL
-		);
-	}
-
 	
+	static int VkKeyValue(IDC_BUTTON_ID id);
+
+	static HWND generate(HWND hWnd, HINSTANCE hInst, int position_x, int position_y, int size_x, int size_y, string text, IDC_BUTTON_ID id);
+
+private:
+
+	static unordered_map<IDC_BUTTON_ID, int> m_Map;
+
 };

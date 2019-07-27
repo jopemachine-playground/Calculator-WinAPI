@@ -1,6 +1,7 @@
 #pragma once
 #include <atlbase.h>
 #include <windows.h>
+#include <string>
 
 using namespace std;
 
@@ -82,6 +83,3 @@ private:
 	static const int bottom = 90;
 
 };
-
-TextIndicator* TextIndicator::Instance = nullptr;
-bool TextIndicator::outputFlag = false;
