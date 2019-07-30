@@ -2,7 +2,7 @@
 #include "KeyMapper.h"
 #include "TextIndicator.h"
 
-std::unordered_map<int, string> KeyMapper::m_Map = {
+const std::unordered_map<int, string> KeyMapper::m_Map = {
 		{ VK_OEM_PLUS, " + " },
 		{ VK_ADD, " + " },
 		{ VK_OEM_MINUS, " - " },
@@ -34,7 +34,7 @@ std::unordered_map<int, string> KeyMapper::m_Map = {
 };
 
 // Shift 버튼을 누른 채 입력했을 때 입력되는 키 모음
-std::unordered_map<int, string> KeyMapper::m_ShiftMap = {
+const std::unordered_map<int, string> KeyMapper::m_ShiftMap = {
 	{ VK_OEM_PLUS, " + " },
 	{ VK_OEM_MINUS, " - " },
 	{ 0x38, " * " },

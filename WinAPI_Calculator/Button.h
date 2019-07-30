@@ -37,6 +37,6 @@ public:
 
 private:
 
-	static unordered_map<IDC_BUTTON_ID, int> m_Map;
+	const static unordered_map<IDC_BUTTON_ID, int> m_Map;
 
 };

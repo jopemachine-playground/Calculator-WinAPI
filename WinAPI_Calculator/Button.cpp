@@ -2,7 +2,7 @@
 #include "Button.h"
 
 // 마우스로 버튼을 클릭했을 때 호출할 key들의 모음
-std::unordered_map<Button::IDC_BUTTON_ID, int> Button::m_Map = {
+const std::unordered_map<Button::IDC_BUTTON_ID, int> Button::m_Map = {
 	{ IDC_BUTTON_0, 0x30 },
 	{ IDC_BUTTON_1, 0x31 },
 	{ IDC_BUTTON_2, 0x32 },
