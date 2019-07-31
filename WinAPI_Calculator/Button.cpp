@@ -1,8 +1,7 @@
 #pragma once
 #include "Button.h"
 
-// ���콺�� ��ư�� Ŭ������ �� ȣ���� key���� ����
-std::unordered_map<Button::IDC_BUTTON_ID, Button::ButtonEvent> Button::m_Map = {
+const std::unordered_map<Button::IDC_BUTTON_ID, Button::ButtonEvent> Button::m_Map = {
 	{ IDC_BUTTON_0, { 0x30, false }},
 	{ IDC_BUTTON_1, { 0x31, false }},
 	{ IDC_BUTTON_2, { 0x32, false }},
