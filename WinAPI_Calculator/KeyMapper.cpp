@@ -50,7 +50,7 @@ void KeyMapper::KeyPressed(HWND hWnd, TCHAR input, bool& shiftKeyFlag, queue<str
 
 	if (input == VK_SHIFT) shiftKeyFlag = true;
 
-	if (input == VK_BACK) TextIndicator::back();
+	if (input == VK_BACK) shiftKeyFlag ? TextIndicator::clear() : TextIndicator::back();
 
 	if (input == VK_RETURN) {
 		string input = TextIndicator::inputExpression();

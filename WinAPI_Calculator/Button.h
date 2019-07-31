@@ -8,6 +8,11 @@ using namespace std;
 class Button {
 public:
 
+	struct ButtonEvent {
+		int vk_value;
+		bool isShifted;
+	};
+
 	enum IDC_BUTTON_ID{
 		IDC_BUTTON_0 = 200,
 		IDC_BUTTON_1,
@@ -31,12 +36,21 @@ public:
 		IDC_BUTTON_EQU,
 	};
 	
-	static int VkKeyValue(IDC_BUTTON_ID id);
+	static Button::ButtonEvent VkKeyValue(IDC_BUTTON_ID id);
 
-	static HWND generate(HWND hWnd, HINSTANCE hInst, int position_x, int position_y, int size_x, int size_y, string text, IDC_BUTTON_ID id);
+	static HWND generate(
+		HWND hWnd, 
+		HINSTANCE hInst, 
+		int position_x, 
+		int position_y, 
+		int size_x, 
+		int size_y, 
+		string text, 
+		IDC_BUTTON_ID id
+	);
 
 private:
 
-	static unordered_map<IDC_BUTTON_ID, int> m_Map;
+	static unordered_map<IDC_BUTTON_ID, ButtonEvent> m_Map;
 
 };

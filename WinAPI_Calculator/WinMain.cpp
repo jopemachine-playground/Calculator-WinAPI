@@ -149,10 +149,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 		case WM_CREATE: 
 		{
+
+			AddFontResourceA("./font/JejuGothic.ttf");
+
 			// Row 1
 			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(", Button::IDC_BUTTON_LP);
 			Button::generate(hWnd, hInst, 100, 110, 70, 50, ")", Button::IDC_BUTTON_RP);
-			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<", Button::IDC_BUTTON_CLEAR);
+			Button::generate(hWnd, hInst, 175, 110, 70, 50, "<<", Button::IDC_BUTTON_BACK);
 			Button::generate(hWnd, hInst, 250, 110, 70, 50, "/", Button::IDC_BUTTON_DIVIDE);
 
 			// Row 2
@@ -198,6 +201,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// 메뉴 선택을 구문 분석합니다:
 			switch (wmId)
 			{
+			case Button::IDC_BUTTON_0:
 			case Button::IDC_BUTTON_1:
 			case Button::IDC_BUTTON_2:
 			case Button::IDC_BUTTON_3:
@@ -211,7 +215,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case Button::IDC_BUTTON_MINUS:
 			case Button::IDC_BUTTON_MULTIPLY:
 			case Button::IDC_BUTTON_DIVIDE:
-				KeyMapper::KeyPressed(hWnd, Button::VkKeyValue((Button::IDC_BUTTON_ID) wmId), shiftKeyFlag, inputQue);
+			case Button::IDC_BUTTON_BACK:
+			case Button::IDC_BUTTON_LP:
+			case Button::IDC_BUTTON_RP:
+			case Button::IDC_BUTTON_EQU:
+			case Button::IDC_BUTTON_CLEAR:
+				Button::ButtonEvent ev =
+					Button::VkKeyValue((Button::IDC_BUTTON_ID) wmId);
+				
+				shiftKeyFlag = ev.isShifted;
+
+				KeyMapper::KeyPressed(hWnd, ev.vk_value, shiftKeyFlag, inputQue);
 				break;
 			case IDM_ABOUT:
 				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
@@ -231,6 +245,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = BeginPaint(hWnd, &ps);
 			TextIndicator::drawOutline(hdc);
 
+			HFONT myFont = CreateFont(15, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"궁서체");
+			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
+
 			if (TextIndicator::outputFlag) {
 				TextIndicator::showResult(hdc);
 			}
@@ -241,6 +258,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 
 			TextIndicator::drawText(hdc);
+
+			SelectObject(hdc, oldFont);
+			DeleteObject(myFont);
+
 			EndPaint(hWnd, &ps);
 		}
 		break;
