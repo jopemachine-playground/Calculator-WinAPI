@@ -35,22 +35,22 @@ public:
 		IDC_BUTTON_DIVIDE,
 		IDC_BUTTON_EQU,
 	};
-	
+
 	static Button::ButtonEvent VkKeyValue(IDC_BUTTON_ID id);
 
 	static HWND generate(
-		HWND hWnd, 
-		HINSTANCE hInst, 
-		int position_x, 
-		int position_y, 
-		int size_x, 
-		int size_y, 
-		string text, 
+		HWND hWnd,
+		HINSTANCE hInst,
+		int position_x,
+		int position_y,
+		int size_x,
+		int size_y,
+		string text,
 		IDC_BUTTON_ID id
 	);
 
 private:
 
-	static unordered_map<IDC_BUTTON_ID, ButtonEvent> m_Map;
+	const static unordered_map<IDC_BUTTON_ID, ButtonEvent> m_Map;
 
 };

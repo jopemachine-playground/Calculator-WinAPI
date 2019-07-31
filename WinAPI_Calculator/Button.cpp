@@ -1,7 +1,7 @@
 #pragma once
 #include "Button.h"
 
-// ¸¶¿ì½º·Î ¹öÆ°À» Å¬¸¯ÇßÀ» ¶§ È£ÃâÇÒ keyµéÀÇ ¸ðÀ½
+// ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ keyï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 std::unordered_map<Button::IDC_BUTTON_ID, Button::ButtonEvent> Button::m_Map = {
 	{ IDC_BUTTON_0, { 0x30, false }},
 	{ IDC_BUTTON_1, { 0x31, false }},
@@ -26,13 +26,13 @@ std::unordered_map<Button::IDC_BUTTON_ID, Button::ButtonEvent> Button::m_Map = {
 
 Button::ButtonEvent Button::VkKeyValue(IDC_BUTTON_ID id) {
 	return m_Map.at(id);
-}	
+}
 
 HWND Button::generate(HWND hWnd, HINSTANCE hInst, int position_x, int position_y, int size_x, int size_y, string text, IDC_BUTTON_ID id) {
 
 	USES_CONVERSION;
 
-	// CA2T : https://www.codeproject.com/Questions/396705/How-to-convert-string-to-LPCTSTR Âü°í
+	// CA2T : https://www.codeproject.com/Questions/396705/How-to-convert-string-to-LPCTSTR ï¿½ï¿½ï¿½ï¿½
 	// string to LPCTSTR
 	return CreateWindow(
 		TEXT("button"),
