@@ -20,8 +20,8 @@ public:
 
 	static void drawText(HDC hdc) {
 		USES_CONVERSION;
-		RECT rect = inputTextRange;
 		DrawText(hdc, CA2T(inputStr.c_str()), inputStr.size(), &inputTextRange, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+
 	}
 
 	static void back() {

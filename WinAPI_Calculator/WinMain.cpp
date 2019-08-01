@@ -8,6 +8,7 @@
 #include "Button.h"
 #include "KeyMapper.h"
 
+#include <atlbase.h>
 #include <queue>
 
 #define MAX_LOADSTRING 100
@@ -142,14 +143,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static queue<string> inputQue;
 	static Calculator* calculator = Calculator::getInstance();
 
+	static SIZE caretSize;
+
 	switch (message)
 	{
-		case WM_MOUSEMOVE:
-			ShowWindow(hWnd, SW_SHOW);
-		break;
 		case WM_CREATE: 
 		{
+			// Caret 만들기
+			CreateCaret(hWnd, NULL, 1, 15);
+			ShowCaret(hWnd);
 
+			// 외부 font import
 			AddFontResourceA("./font/JejuGothic.ttf");
 
 			// Row 1
@@ -238,7 +242,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		break;
-		
+
 		case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
@@ -262,12 +266,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			SelectObject(hdc, oldFont);
 			DeleteObject(myFont);
 
+			string str = TextIndicator::inputExpression();
+			const char* chp = str.c_str();
+
+			USES_CONVERSION;
+
+			GetTextExtentPoint(hdc, CA2T(chp), strlen(chp), &caretSize);
+
+			SetCaretPos(307, 45);
+
+			ShowCaret(hWnd);
+
 			EndPaint(hWnd, &ps);
 		}
 		break;
 
 		case WM_DESTROY: 
 		{
+			HideCaret(hWnd);
+			DestroyCaret();
 			PostQuitMessage(0);
 			break;
 		}
