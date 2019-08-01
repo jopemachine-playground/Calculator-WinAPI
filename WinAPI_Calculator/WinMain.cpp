@@ -154,7 +154,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			ShowCaret(hWnd);
 
 			// 외부 font import
-			AddFontResourceA("./font/JejuGothic.ttf");
+			AddFontResourceA("../font/JejuGothic.ttf");
 
 			// Row 1
 			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(", Button::IDC_BUTTON_LP);
@@ -249,7 +249,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = BeginPaint(hWnd, &ps);
 			TextIndicator::drawOutline(hdc);
 
-			HFONT myFont = CreateFont(15, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"궁서체");
+			HFONT myFont = CreateFont(15, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"JejuGothic");
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 
 			if (TextIndicator::outputFlag) {
@@ -274,8 +274,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			GetTextExtentPoint(hdc, CA2T(chp), strlen(chp), &caretSize);
 
 			SetCaretPos(307, 45);
-
-			ShowCaret(hWnd);
 
 			EndPaint(hWnd, &ps);
 		}

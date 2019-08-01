@@ -9,6 +9,7 @@ const std::unordered_map<int, string> KeyMapper::m_Map = {
 		{ VK_SUBTRACT, " - " },
 		{ VK_MULTIPLY, " * " },
 		{ VK_DIVIDE, " / " },
+		{ VK_SPACE, " " },
 		{ 0xBF, " / " },
 
 		{ 0x30, "0" },
