@@ -9,7 +9,7 @@ using namespace std;
 class Calculator {
 public:
 
-	int calculate(string infixStr);
+	double calculate(string infixStr);
 
 	static Calculator* getInstance() {
 		if (Instance == nullptr) Instance = new Calculator();
@@ -26,8 +26,8 @@ private:
 	// 변환할 때 각 토큰들을 분리해, 큐를 만들어 넣는다.
 	queue<string> InfToPost(string infixStr);
 
-	int parsingPost(queue<string> postfixStr);
+	double parsingPost(queue<string> postfixStr);
 
-	int binaryOpEval(char op, pair<int, int> operand);
+	double binaryOpEval(char op, pair<double, double> operand);
 	
 };

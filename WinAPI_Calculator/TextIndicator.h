@@ -38,6 +38,12 @@ public:
 	}
 
 	static void showResult(HDC hdc) {
+
+		// . 뒤에 나오는 숫자들이 모두 0인 경우 이 부분을 잘라내 표시한다.
+		if (true) {
+		
+		}
+
 		USES_CONVERSION;
 		DrawText(hdc, CA2T(outputStr.c_str()), outputStr.size(), &outputTextRange, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 		outputFlag = false;

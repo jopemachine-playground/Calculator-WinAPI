@@ -1,5 +1,4 @@
 #pragma once
-#include <regex>
 #include "Utility.h"
 #include "Calculator.h"
 
@@ -7,7 +6,7 @@ using namespace std;
 
 Calculator* Calculator::Instance = nullptr;
 
-int Calculator::calculate(string infixStr) {
+double Calculator::calculate(string infixStr) {
 	return parsingPost(InfToPost(infixStr));
 }
 
@@ -87,7 +86,7 @@ queue<string> Calculator::InfToPost(string infixStr) {
 	return ret;
 }
 
-int Calculator::parsingPost(queue<string> tokens) {
+double Calculator::parsingPost(queue<string> tokens) {
 
 	// 계산을 위한 스택
 	stack<string> stk;
@@ -102,10 +101,13 @@ int Calculator::parsingPost(queue<string> tokens) {
 			if (stk.empty()) {
 				// 에러 처리
 			}
-			int operand1 = atoi(stk.top().c_str());
+			double operand1 = atoi(stk.top().c_str());
 			stk.pop();
-			int operand2 = atoi(stk.top().c_str());
+			double operand2 = atoi(stk.top().c_str());
 			stk.pop();
+
+			auto r = to_string(binaryOpEval(*(tokens.front().c_str()), { operand1, operand2 }));
+
 			stk.push(to_string(binaryOpEval(*(tokens.front().c_str()), { operand1, operand2 })));
 			tokens.pop();
 			continue;
@@ -119,11 +121,11 @@ int Calculator::parsingPost(queue<string> tokens) {
 		// 에러 처리
 	}
 
-	return atoi(stk.top().c_str());
+	return atof(stk.top().c_str());
 }
 
 
-int Calculator::binaryOpEval(char op, pair<int, int> operand) {
+double Calculator::binaryOpEval(char op, pair<double, double> operand) {
 	switch (op)
 	{
 	case '+':
