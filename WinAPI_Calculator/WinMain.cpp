@@ -10,6 +10,8 @@
 
 #include <atlbase.h>
 #include <queue>
+#include <Windows.h>
+#include <ShellApi.h>
 
 #define MAX_LOADSTRING 100
 
@@ -323,6 +325,11 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{
 			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		if (LOWORD(wParam) == IDOK2) 
+		{
+			ShellExecute(NULL, L"open", L"https://github.com/jopemachine/Calculator-WinAPI", NULL, NULL, SW_SHOWNORMAL);
 			return (INT_PTR)TRUE;
 		}
 		break;
