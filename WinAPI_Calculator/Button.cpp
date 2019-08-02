@@ -20,7 +20,8 @@ const std::unordered_map<Button::IDC_BUTTON_ID, Button::ButtonEvent> Button::m_M
 	{ IDC_BUTTON_LP, { 0x39, true }},
 	{ IDC_BUTTON_RP, { 0x30, true }},
 	{ IDC_BUTTON_EQU, { VK_RETURN, false }},
-	{ IDC_BUTTON_CLEAR, { VK_BACK, true }}
+	{ IDC_BUTTON_CLEAR, { VK_BACK, true }},
+	{ IDC_BUTTON_DOT, { VK_OEM_PERIOD , false }}
 };
 
 Button::ButtonEvent Button::VkKeyValue(IDC_BUTTON_ID id) {

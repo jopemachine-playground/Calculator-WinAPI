@@ -183,7 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// Row 5
 			Button::generate(hWnd, hInst, 25, 330, 70, 50, "C", Button::IDC_BUTTON_CLEAR);
 			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0", Button::IDC_BUTTON_0);
-			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".", Button::IDC_BUTTON_CLEAR);
+			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".", Button::IDC_BUTTON_DOT);
 			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=", Button::IDC_BUTTON_EQU);
 
 		}
@@ -224,6 +224,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case Button::IDC_BUTTON_RP:
 			case Button::IDC_BUTTON_EQU:
 			case Button::IDC_BUTTON_CLEAR:
+			case Button::IDC_BUTTON_DOT:
 				Button::ButtonEvent ev =
 					Button::VkKeyValue((Button::IDC_BUTTON_ID) wmId);
 				

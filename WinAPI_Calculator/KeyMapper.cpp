@@ -11,6 +11,7 @@ const std::unordered_map<int, string> KeyMapper::m_Map = {
 		{ VK_DIVIDE, " / " },
 		{ VK_SPACE, " " },
 		{ 0xBF, " / " },
+		{ VK_OEM_PERIOD, "." },
 
 		{ 0x30, "0" },
 		{ 0x60, "0" },
@@ -31,7 +32,7 @@ const std::unordered_map<int, string> KeyMapper::m_Map = {
 		{ 0x38, "8" },
 		{ 0x68, "8" },
 		{ 0x39, "9" },
-		{ 0x69, "9" },
+		{ 0x69, "9" }
 };
 
 // Shift 버튼을 누른 채 입력했을 때 입력되는 키 모음
@@ -74,4 +75,9 @@ string KeyMapper::mappingInputToValue(int key, bool isShifted = false) {
 		return it->second;
 	}
 	return "";
+}
+
+void TextIndicator::setOutput(string output) {
+	outputStr = output;
+	outputFlag = true;
 }

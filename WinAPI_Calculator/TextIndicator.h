@@ -10,48 +10,21 @@ public:
 
 	static bool outputFlag;
 
-	static void drawOutline(HDC hdc) {
-		Rectangle(hdc, left, top + 5, right - 7, bottom + 5);
-	}
+	static void drawOutline(HDC);
 
-	static void append(string ch) {
-		inputStr += ch;
-	}
+	static void append(string);
 
-	static void drawText(HDC hdc) {
-		USES_CONVERSION;
-		DrawText(hdc, CA2T(inputStr.c_str()), inputStr.size(), &inputTextRange, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
+	static void drawText(HDC);
 
-	}
+	static void back();
 
-	static void back() {
-		inputStr = inputStr.substr(0, inputStr.length() - 1);
-	}
+	static void clear();
 
-	static void clear() {
-		inputStr = "";
-	}
+	static void setOutput(string);
 
-	static void setOutput(string output) {
-		outputStr = output;
-		outputFlag = true;
-	}
+	static void showResult(HDC);
 
-	static void showResult(HDC hdc) {
-
-		// . 뒤에 나오는 숫자들이 모두 0인 경우 이 부분을 잘라내 표시한다.
-		if (true) {
-		
-		}
-
-		USES_CONVERSION;
-		DrawText(hdc, CA2T(outputStr.c_str()), outputStr.size(), &outputTextRange, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
-		outputFlag = false;
-	}
-
-	static string inputExpression() {
-		return inputStr;
-	}
+	static string inputExpression();
 
 
 private:
