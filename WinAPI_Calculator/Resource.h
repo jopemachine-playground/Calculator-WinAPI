@@ -3,7 +3,7 @@
 // WinAPI_Calculator.rc에서 사용되고 있습니다.
 //
 #define IDC_MYICON                      2
-#define IDOK2                           2
+#define IDOK2                           3
 #define IDD_WINAPICALCULATOR_DIALOG     102
 #define IDS_APP_TITLE                   103
 #define IDD_ABOUTBOX                    103
