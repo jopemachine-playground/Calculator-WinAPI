@@ -10,11 +10,11 @@ public:
 
 	static bool outputFlag;
 
-	static void drawOutline(HDC);
+	static void drawOutline(HDC&);
 
 	static void append(string);
 
-	static void drawText(HDC);
+	static void drawText(HDC&);
 
 	static void back();
 
@@ -22,7 +22,7 @@ public:
 
 	static void setOutput(string);
 
-	static void showResult(HDC);
+	static void showResult(HDC&);
 
 	static string inputExpression();
 

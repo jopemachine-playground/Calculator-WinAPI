@@ -144,7 +144,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	static bool shiftKeyFlag = false;
 	static queue<string> inputQue;
 	static Calculator* calculator = Calculator::getInstance();
-
 	static SIZE caretSize;
 
 	switch (message)
@@ -154,9 +153,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// Caret 만들기
 			CreateCaret(hWnd, NULL, 1, 15);
 			ShowCaret(hWnd);
-
-			// 외부 font import
-			AddFontResourceA("../font/JejuGothic.ttf");
 
 			// Row 1
 			Button::generate(hWnd, hInst, 25, 110, 70, 50, "(", Button::IDC_BUTTON_LP);
@@ -187,6 +183,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			Button::generate(hWnd, hInst, 100, 330, 70, 50, "0", Button::IDC_BUTTON_0);
 			Button::generate(hWnd, hInst, 175, 330, 70, 50, ".", Button::IDC_BUTTON_DOT);
 			Button::generate(hWnd, hInst, 250, 330, 70, 50, "=", Button::IDC_BUTTON_EQU);
+			
+			// 외부 font import
+			if (!AddFontResourceEx(L"../font/Digital-7 Mono.ttf", FR_PRIVATE, NULL)){
+				MessageBoxW(hWnd, L"Font loading Error", L"Error", MB_OK);
+				exit(0);
+			}
 
 		}
 		break;
@@ -252,7 +254,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = BeginPaint(hWnd, &ps);
 			TextIndicator::drawOutline(hdc);
 
-			HFONT myFont = CreateFont(15, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"JejuGothic");
+			HFONT myFont = CreateFont(19, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0, 0, L"Digital-7 Mono");
 			HFONT oldFont = (HFONT)SelectObject(hdc, myFont);
 
 			if (TextIndicator::outputFlag) {
@@ -268,6 +270,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 			SelectObject(hdc, oldFont);
 			DeleteObject(myFont);
+
 
 			string str = TextIndicator::inputExpression();
 			const char* chp = str.c_str();

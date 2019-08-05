@@ -20,7 +20,7 @@ RECT TextIndicator::outputTextRange = {
 	bottom + 30 
 };
 
-void TextIndicator::showResult(HDC hdc) {
+void TextIndicator::showResult(HDC& hdc) {
 
 	// 소수 부분이 0이라면, 따로 표기하지 않는다.
 	int integerValue = atoi(outputStr.c_str());
@@ -47,7 +47,7 @@ void TextIndicator::back() {
 	inputStr = inputStr.substr(0, inputStr.length() - 1);
 }
 
-void TextIndicator::drawText(HDC hdc) {
+void TextIndicator::drawText(HDC& hdc) {
 	USES_CONVERSION;
 	DrawText(hdc, CA2T(inputStr.c_str()), inputStr.size(), &inputTextRange, DT_SINGLELINE | DT_RIGHT | DT_VCENTER);
 }
@@ -56,6 +56,6 @@ void TextIndicator::append(string ch) {
 	inputStr += ch;
 }
 
-void TextIndicator::drawOutline(HDC hdc) {
+void TextIndicator::drawOutline(HDC& hdc) {
 	Rectangle(hdc, left, top + 5, right - 7, bottom + 5);
 }
